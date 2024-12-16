@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playwright Control Panel</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    button { margin: 10px; padding: 10px 20px; font-size: 16px; }
+    #status { margin-top: 20px; font-size: 18px; font-weight: bold; }
+    pre { white-space: pre-wrap; word-wrap: break-word; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <h1>Playwright Control Panel</h1>
+  <button onclick="startScript()">Start Playwright Script</button>
+  <div id="status"></div>
+  <div id="output"></div> <!-- Display the response from Playwright here -->
+
+  <script>
+    async function startScript() {
+      // Indicate that the script is starting
+      document.getElementById('status').textContent = 'Starting Playwright script...';
+      document.getElementById('output').textContent = ''; // Clear previous output
+
+      // Send GET request to the Express server to run the Playwright script
+      const response = await fetch('/start-script');
+      const scriptOutput = await response.text();
+
+      // Display the result in the 'output' div
+      document.getElementById('output').innerHTML = scriptOutput;
+      document.getElementById('status').textContent = 'Playwright script finished!';
+    }
+  </script>
+</body>
+</html>
